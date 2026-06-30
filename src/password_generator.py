@@ -1,7 +1,7 @@
 import random
 import string
 
-def generator_password(lenght: int = 12, use_digits: bool = True, use_specials: bool = True) -> str:
+def generate_password(lenght: int = 12, use_digits: bool = True, use_specials: bool = True) -> str:
     chars = string.ascii_letters
     if use_digits:
         chars += string.digits
