@@ -14,7 +14,7 @@ def print_notes(notes):
     if not notes:
         return print("Not have notes!")
     for note in notes:
-        return print(f"[{note.id}] {note.title} - {note.text[:30]}... ({note.created_at})")
+        return print(f"[{note.id}] {note.title} - {note.text[:30]}... ({note.create_at})")
 
 def main():
     while True:
