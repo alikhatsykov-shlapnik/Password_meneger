@@ -7,7 +7,7 @@ class Note:
     id: int
     title: str
     text: str
-    created_at: str
+    create_at: str
 
     @classmethod
     def create(cls, title: str, text: str) -> "Note":

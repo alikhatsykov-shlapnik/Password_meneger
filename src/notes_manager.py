@@ -12,20 +12,23 @@ def load_notes() -> list[Note]:
         data = json.load(f)
         return[Note(**item) for item in data]
 
-def save_notes(notes: list[Note]) -> None:
+def save_notes(notes):
     """Сохраняет объекты Note в JSON"""
     with open(NOTES_FILE, "w", encoding = "utf-8") as f:
         #Превращаем объекты в словари ждя JSON
         json.dump([note.__dict__ for note in notes], f, ensure_ascii = False, indent = 2)
 
 def add_note(title: str, text: str) -> None:
-    notes = load_notes()
-    new_note = Note.create(title, text)
-    new_note.id =len(notes) + 1
-    notes.append(new_note)
-    save_notes(notes)
-    print(f"✔ Заметка '{title}' сохранена!")
-
+    try:
+        notes = load_notes()
+        new_note = Note.create(title, text)
+        new_note.id = len(notes) + 1
+        notes.append(new_note)
+        save_notes(notes)
+        print(f"✔ Заметка '{title}' сохранена!")
+    except Exception as e:
+        print(f"💣 ошибка при сохранении заметки: {e}")
+        
 def search_notes(keyword: str) ->list[Note]:
     notes = load_notes()
     results = [

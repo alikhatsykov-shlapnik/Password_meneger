@@ -35,10 +35,15 @@ def main():
             print("Password:", generate_password(length))
 
         elif choice == "2":
-            title = input("Заголовок: ")
-            text = input("Текст: ")
-            add_note(title, text)
-
+            try:
+                title = input("Заголовок: ")
+                text = input("Текст: ")
+                add_note(title, text)
+            except KeyboardInterrupt:
+                print("\n Ок, отмена")
+            except Exception as e:
+                print(f"Щшибка: {e}")
+                
         elif choice == "3":
             keyword = input("Ключевое слово: ")
             results = search_notes(keyword)
