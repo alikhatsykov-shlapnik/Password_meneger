@@ -1,7 +1,5 @@
-import keyword
 import sys
 import os
-
 
 #Дщобавляем src в путь, чтобы Python видел модули
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
@@ -10,11 +8,15 @@ from src.password_generator import generate_password
 from src.notes_manager import add_note, search_notes, load_notes, delete_note
 
 def print_notes(notes):
-    """Выводит список заметок красиво"""
+    """Выводит список заметок"""
     if not notes:
         return print("Not have notes!")
+    
     for note in notes:
-        return print(f"[{note.id}] {note.title} - {note.text[:30]}... ({note.create_at})")
+        if isinstance(note, dict):
+            print(f"[{note.get('id', '?')}] {note.get('title', 'Без заголовка')} - {note.get('text', '')[:30]}... ({note.get('create_at', '')})")
+        else:
+            print(f"[{note.id}] {note.title} - {note.text[:30]}... ({note.create_at})")
 
 def main():
     while True:
@@ -30,9 +32,11 @@ def main():
         choice = input("Выберите действие: ")
 
         if choice == "1":
-            length_input = input("Длина (по умолч. 12): ") or "12"
-            length = int(length_input)
-            print("Password:", generate_password(length))
+            name = input("password_name: ")
+            length_input = int(input("Длина (по умолч. 12): ")) or "12"
+            pas = generate_password(length_input)
+            add_note(f"Password: {name}", f"Password:{pas}\nCreated: {__import__('datetime').datetime.now()}")
+            print(f"Password is from: {name} saved.\nPassword: {pas}")
 
         elif choice == "2":
             try:
@@ -63,6 +67,8 @@ def main():
         elif choice == "6":
             print("See you!")
             break
+        else:
+            print('Wrong input, try again')
 
 if __name__ == "__main__":
     main()
